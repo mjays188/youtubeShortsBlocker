@@ -1,0 +1,29 @@
+{
+  "name": "Short Video Blocker",
+  "version": "1.1.0",
+  "manifest_version": 3,
+  "description": "Uses the chrome.declarativeNetRequest API to block requests to API endpoints requesting short videos.",
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "block_yt",
+        "enabled": true,
+        "path": "rules/youtube.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "*://*//*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*//*"],
+      "js": ["scripts/block_shorts.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": ["declarativeNetRequest", "declarativeNetRequestFeedback"]
+}
